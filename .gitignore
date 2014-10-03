@@ -1,0 +1,9 @@
+*.dvi
+*.bbl
+*.aux
+*.blg
+*.log
+*.fdb_latexmk
+*.pyc
+.Rhistory
+.pem

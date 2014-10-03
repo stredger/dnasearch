@@ -1,0 +1,6 @@
+
+\section{Conclusions}
+
+The simple distributed system I set up to search genomes required only a basic knowledge of python, and unix systems. The system consisted of three GEE nodes to perform computation, my local machine to act as the controller, and an instance of the sage filesystem to store files. The actual system was built using the fabric python library and the sage filesystem. I used a web crawler written in python to pull genomes into the sage filesystem, which were then used by the actual sequence alignment tools Bowtie2 and MUMmer. Distribution of the jobs was done using fabric to run jobs on the remote GEE nodes.
+
+I aligned $5534$ viral DNA sequences to the hg19 build of the human genome using Bowtie2, ending up with $36$ reported matches. Of all the matches only the HERV-K113 genome is likely to be an actual match as about one quarter of the total sequence was aligned. The lack of concrete alignments is not particularly alarming as most of the viruses aligned do not infect humans, are not retroviruses, and most human discovered EVEs have existed in the human genome for millions of years, an ample amount of time for current viruses to significantly diverge.
