@@ -6,4 +6,4 @@
 *.fdb_latexmk
 *.pyc
 .Rhistory
-.pem
+*.pem
