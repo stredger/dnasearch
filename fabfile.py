@@ -84,13 +84,20 @@ def SetupSearcher():
   put('common.py', 'bioinf/common.py')
 
 
+
+@parallel
+def DownloadChromosomes():
+  SetupSearcher()
+  with cd('bioinf'):
+    run('python dnasearch.py dlchroms')
+
+
 @parallel
 def GetVirusGenomes():
   SetupCrawler()
   part = GetPartNum()
   with cd('bioinf'):
     run('python crawler.py frac virus %d %d %s' % (len(hosts.keys()), part, hosts[env.host_string]))
-
 
 
 @parallel
@@ -100,7 +107,6 @@ def GetHumanChromosomes():
   if part == 1: return
   with cd('bioinf'):
     run('python crawler.py frac human %d %d %s' % (len(hosts.keys()), part, hosts[env.host_string]))
-
 
 
 @parallel
@@ -142,9 +148,3 @@ def RunMummerSearch():
   with cd('bioinf'):
     run('python dnasearch.py mummer %s %s' % (hosts[env.host_string], 'MUMmer3.23'))
 
-
-@parallel
-def DownloadChromosomes():
-  SetupSearcher()
-  with cd('bioinf'):
-    run('python dnasearch.py dlchroms')
