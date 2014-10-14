@@ -10,8 +10,8 @@ hosts = {
 }
 
 env.hosts = hosts.keys()
-env.user = 'ig_104'
-env.key_filename = 'keys/ig_104.pem'
+env.user = 'ig_111'
+env.key_filename = 'keys/ig_111.pem'
 
 
 def DeterminePlatform():
@@ -137,7 +137,7 @@ def InstallBowtie2():
 
 @parallel
 def RunBowtie2Search():
-  SetupSearcher()
+  # SetupSearcher()
   with cd('bioinf'):
     run('python dnasearch.py bowtie2 %s %s' % (hosts[env.host_string], 'bowtie2-2.2.3'))
 
