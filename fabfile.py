@@ -70,19 +70,24 @@ def SetupDependencies():
     sudo('python setup.py install')
 
 
-def SetupCrawler():
-  SetupDependencies()
+def InstallCrawler():
   run('mkdir -p bioinf')
   put('crawler.py', 'bioinf/crawler.py')
   put('common.py', 'bioinf/common.py')
 
-
-def SetupSearcher():
+def SetupCrawler():
   SetupDependencies()
+  InstallCrawler()
+
+
+def InstallSearcher():
   run('mkdir -p bioinf')
   put('dnasearch.py', 'bioinf/dnasearch.py')
   put('common.py', 'bioinf/common.py')
 
+def SetupSearcher():
+  SetupDependencies()
+  InstallSearcher()
 
 
 @parallel
@@ -136,15 +141,20 @@ def InstallBowtie2():
 
 
 @parallel
+def RestartNetwork():
+  sudo('service network restart')
+
+
+@parallel
 def RunBowtie2Search():
-  # SetupSearcher()
+  InstallSearcher()
   with cd('bioinf'):
     run('python dnasearch.py bowtie2 %s %s' % (hosts[env.host_string], 'bowtie2-2.2.3'))
 
 
 @parallel
 def RunMummerSearch():
-  SetupSearcher()
+  InstallSearcher()
   with cd('bioinf'):
     run('python dnasearch.py mummer %s %s' % (hosts[env.host_string], 'MUMmer3.23'))
 
