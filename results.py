@@ -95,6 +95,7 @@ def PrintResults(res):
 def PrintMatches():
   heads = ReadBowtie2ResultsHeaders()
   res = FindVirusesFromResults(heads)
+  print res
   PrintResults(res)
 
 
@@ -109,15 +110,20 @@ def ReadSageFile(f):
   fd.close()
 
 
-def GetMatchesFromSamFile(fullpath):
-  fs = sagefs.SageFS()
-  fd = fs.open(fullpath)
+def GetMatchesFromSam(fd):
   alllines = fd.readlines()
   goodlines = filter(lambda dat: dat[0] != '@' and '\t' in dat, alllines)
   headers = [gl.split('\t')[:9] for gl in goodlines]
   res = FindVirusesFromResults(headers)
   print res
   PrintResults(res)
+
+
+def GetMatchesFromFile(fullpath):
+  fs = sagefs.SageFS()
+  fd = fs.open(fullpath)
+  GetMatchesFromSamFile(fd)
+
 
 
 if __name__ == '__main__':
